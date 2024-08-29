@@ -18,9 +18,13 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css"
+        />
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -33,9 +37,10 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {{ $slot }}
             </main>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
     </body>
 </html>

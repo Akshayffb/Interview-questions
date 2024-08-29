@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/task-management', [TaskController::class, 'index'])->name('task');
+    Route::post('task-create', [TaskController::class, 'store'])->name('task.create');
+    Route::post('project-create', [ProjectController::class, 'store'])->name('project.create');
 });
 
 Route::middleware('auth')->group(function () {
