@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/task-management', [TaskController::class, 'index'])->name('task');
     Route::post('task-create', [TaskController::class, 'store'])->name('task.create');
     Route::post('project-create', [ProjectController::class, 'store'])->name('project.create');
+    Route::post('project-delete/{id}', [ProjectController::class, 'destroy'])->name('project.delete');
 });
 
 Route::middleware('auth')->group(function () {

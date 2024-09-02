@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -11,25 +12,35 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
-        return view('task');
+        $data = Project::all();
+        $data = $data->map(function ($data) {
+            return [
+                'id' => $data->id,
+                'name' => $data->name,
+            ];
+        });
+        return view('task')->with('data', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create(Request $request) {}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        var_dump($request);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'project' => 'required|integer',
+            'priority' => 'string|max:255'
+        ]);
+        var_dump($validated);
     }
 
     /**

@@ -1,5 +1,16 @@
 @section('title', 'Task Management')
 <x-app-layout>
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session("success") }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        ></button>
+    </div>
+    @endif
     <div class="page-body">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
@@ -69,11 +80,55 @@
                     </div>
                 </div>
             </div>
+            <!-- Display Projects -->
+            <div class="mt-4 col-lg-4">
+                <p class="h4 mb-2">Projects</p>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-vcenter card-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th class="w-1">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($data) @foreach($data as $datas)
+                                <tr>
+                                    <td>{{ $datas["id"] }}</td>
+                                    <td class="text-secondary">
+                                        {{ $datas["name"] }}
+                                    </td>
+                                    <td class="d-flex gap-3">
+                                        <a
+                                            href="{{ $datas['id'] }}"
+                                            class="btn btn-secondary"
+                                            >Edit</a
+                                        >
+                                        <form
+                                            action="{{ route('project.delete', ['id' => $datas['id']])}}"
+                                            method="post"
+                                        >
+                                            @csrf
+                                            <button
+                                                class="btn btn-danger"
+                                                type="submit"
+                                            >
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
     <!-- Project Modal -->
-
     <div
         class="modal modal-blur fade"
         id="project-modal"
@@ -103,7 +158,7 @@
                                 type="text"
                                 class="form-control"
                                 id="project-name"
-                                name="project-name"
+                                name="name"
                                 class="form-control"
                                 placeholder="Enter project name"
                                 required
@@ -212,8 +267,8 @@
                                         <option disabled selected>
                                             Select the project
                                         </option>
-                                        <option value="">Project 1</option>
-                                        <option value="">Project 2</option>
+                                        <option value="1">Project 1</option>
+                                        <option value="2">Project 2</option>
                                     </select>
                                 </div>
                             </div>

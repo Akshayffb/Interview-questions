@@ -27,14 +27,13 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $validated = $request->validate([
-            'project-name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
-
         $request->user()->projects()->create($validated);
-        return redirect()->route('task');
+        return redirect()->back()->with('success', 'Project Created Successfully');
     }
 
     /**
@@ -64,8 +63,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $id = Project::find($id);
+        if ($id) {
+            $id->delete();
+        }
+        return redirect()->back()->with('success', 'Project Deleted Successfully');
     }
 }
